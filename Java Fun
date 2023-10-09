@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fancify My Text</title>
+</head>
+<body>
+    <h1>Fancify My Text</h1>
+    <fieldset>
+        <legend>Text</legend>
+        <textarea id="textInput" rows="4" cols="30"></textarea>
+    </fieldset>
+    <fieldset>
+        <legend>Fancify</legend>
+        <button id="biggerButton">Bigger!</button>
+        <label for="fancyRadio">FancyShmancy</label>
+        <input type="radio" id="fancyRadio" name="style" value="fancy">
+        <label for="boringRadio">BoringBetty</label>
+        <input type="radio" id="boringRadio" name="style" value="boring">
+        <button id="mooButton">Moo</button>
+    </fieldset>
+    <script src="fancifymytext.js"></script>
+</body>
+</html>
+
+// Function to change font size to 24pt
+function makeBigger() {
+    const textArea = document.getElementById("textInput");
+    textArea.style.fontSize = "24pt";
+}
+
+// Function to handle radio button selection
+function handleStyleChange() {
+    const textArea = document.getElementById("textInput");
+    const fancyRadio = document.getElementById("fancyRadio");
+    
+    if (fancyRadio.checked) {
+        textArea.style.fontWeight = "bold";
+        textArea.style.color = "blue";
+        textArea.style.textDecoration = "underline";
+    } else {
+        textArea.style.fontWeight = "normal";
+        textArea.style.color = "black"; // Reset to default color
+        textArea.style.textDecoration = "none"; // Remove underline
+    }
+}
+
+// Function to uppercase text and add "-Moo" suffix to the last word of each sentence
+function makeMoo() {
+    const textArea = document.getElementById("textInput");
+    const text = textArea.value;
+    
+    // Split the text into sentences and process each one
+    const sentences = text.split(".");
+    const modifiedSentences = sentences.map(sentence => {
+        // Split each sentence into words
+        const words = sentence.split(" ");
+        // If there are words in the sentence, modify the last word
+        if (words.length > 0) {
+            words[words.length - 1] = words[words.length - 1].toUpperCase() + "-Moo";
+        }
+        return words.join(" ");
+    });
+    
+    // Join the modified sentences back together with periods and update the text
+    textArea.value = modifiedSentences.join(".");
+}
+
+// Event handlers
+document.getElementById("biggerButton").addEventListener("click", makeBigger);
+document.getElementById("fancyRadio").addEventListener("change", handleStyleChange);
+document.getElementById("boringRadio").addEventListener("change", handleStyleChange);
+document.getElementById("mooButton").addEventListener("click", makeMoo);
